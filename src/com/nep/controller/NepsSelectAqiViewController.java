@@ -10,6 +10,7 @@ import com.nep.service.AqiFeedbackService;
 import com.nep.service.impl.AqiFeedbackServiceImpl;
 import com.nep.util.CommonUtil;
 import com.nep.util.JavafxUtil;
+import com.nep.util.LogUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,8 +25,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class NepsSelectAqiViewController implements Initializable {
+    private static final Logger logger = LogUtil.getLogger(NepsSelectAqiViewController.class);
+
     @FXML
     private TableView<Aqi> txt_tableView;
     @FXML
@@ -141,21 +145,33 @@ public class NepsSelectAqiViewController implements Initializable {
 
     }
 
-    public void saveFeedBack(){
-        AqiFeedback afb = new AqiFeedback();
-        afb.setAddress(txt_address.getText());
-        afb.setAfName(supervisor.getRealName());
-        afb.setProviceName(txt_province.getValue());
-        afb.setCityName(txt_city.getValue());
-        afb.setEstimateGrade(txt_level.getValue());
-        afb.setInfomation(txt_information.getText());
-        afb.setDate(CommonUtil.currentDate());
-        afb.setState("未指派");
-        aqiFeedbackService.saveFeedBack(afb);
-        JavafxUtil.showAlert(primaryStage, "反馈信息成功", "您的预估AQI信息提交成功", "感谢您的反馈!","info");
-        NepsFeedbackViewController.primaryStage = primaryStage;
-        JavafxUtil.showStage(NepsMain.class,"view/NepsFeedbackView.fxml", primaryStage,"东软环保公众监督平台-公众监督员端-AQI反馈数据列表");
+    public void saveFeedBack() {
+        try {
+            AqiFeedback afb = new AqiFeedback();
+            afb.setAddress(txt_address.getText());
+            afb.setAfName(supervisor.getRealName());
+            afb.setProviceName(txt_province.getValue());
+            afb.setCityName(txt_city.getValue());
+            afb.setEstimateGrade(txt_level.getValue());
+            afb.setInfomation(txt_information.getText());
+            afb.setDate(CommonUtil.currentDate());
+            afb.setState("未指派");
 
+            aqiFeedbackService.saveFeedBack(afb);
+            logger.info(String.format(
+                    "AQI反馈提交 - 用户: %s, 地址: %s, 等级: %s",
+                    supervisor.getRealName(), txt_address.getText(), txt_level.getValue()
+            ));
+            JavafxUtil.showAlert(primaryStage, "反馈信息成功", "您的预估AQI信息提交成功", "感谢您的反馈!","info");
+
+            NepsFeedbackViewController.primaryStage = primaryStage;
+            JavafxUtil.showStage(NepsMain.class,"view/NepsFeedbackView.fxml", primaryStage,"东软环保公众监督平台-公众监督员端-AQI反馈数据列表");
+        } catch (Exception e) {
+            logger.severe(String.format(
+                    "AQI反馈提交失败 - 用户: %s, 错误: %s",
+                    supervisor.getRealName(), e.getMessage()
+            ));
+        }
     }
 
     public void feedBackList(){
