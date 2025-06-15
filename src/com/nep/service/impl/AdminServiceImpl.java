@@ -15,7 +15,7 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
         @Override
         public boolean login(String logincode, String password) {
-            String sql = "SELECT COUNT(*) FROM admin WHERE account = ? AND password = ?";
+            String sql = "SELECT COUNT(*) FROM nepm WHERE account = ? AND password = ?";
 
             try (Connection conn = DatabaseUtil.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
