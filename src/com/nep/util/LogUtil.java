@@ -1,41 +1,50 @@
 package com.nep.util;
 
+import java.io.IOException;
 import java.util.logging.*;
 
 public class LogUtil {
-    private static final Logger logger = Logger.getLogger(LogUtil.class.getName());
-
-    static {  // 类加载时自动执行
+    static {  // 类加载时执行
         init();
     }
 
     public static void init() {
         try {
-            // 1. 获取全局Logger（覆盖所有类的日志设置）
-            Logger globalLogger = Logger.getLogger("");
+            Logger rootLogger = Logger.getLogger("");
 
-            // 2. 移除默认的ConsoleHandler（避免重复输出）
-            Handler[] handlers = globalLogger.getHandlers();
+            // 1. 移除所有默认Handler（包括ConsoleHandler）
+            Handler[] handlers = rootLogger.getHandlers();
             for (Handler handler : handlers) {
-                globalLogger.removeHandler(handler);
+                rootLogger.removeHandler(handler);
             }
 
-            // 3. 添加FileHandler（输出到文件）
+            // 2. 仅配置FileHandler（无ConsoleHandler）
             FileHandler fileHandler = new FileHandler("logs/app.log", true); // true为追加
-            fileHandler.setFormatter(new SimpleFormatter());
-            fileHandler.setLevel(Level.ALL);
+            fileHandler.setFormatter(new SimpleFormatter() {
+                private static final String FORMAT = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
 
-            // 4. 将Handler添加到全局Logger
-            globalLogger.addHandler(fileHandler);
-            globalLogger.setLevel(Level.INFO); // 设置全局日志级别
+                @Override
+                public String format(LogRecord record) {
+                    return String.format(FORMAT,
+                            new java.util.Date(record.getMillis()),
+                            record.getLevel().getLocalizedName(),
+                            record.getMessage()
+                    );
+                }
+            });
+            fileHandler.setLevel(Level.ALL); // 记录所有级别日志
+            rootLogger.addHandler(fileHandler);
 
-            logger.info("日志系统初始化完成");
-        } catch (Exception e) {
-            logger.severe("日志配置失败: " + e.getMessage());
+            // 3. 设置全局日志级别
+            rootLogger.setLevel(Level.INFO);
+
+            Logger.getGlobal().info("日志系统初始化完成（仅文件输出）");
+        } catch (IOException e) {
+            Logger.getGlobal().severe("日志文件初始化失败: " + e.getMessage());
         }
     }
 
-    public static Logger getLogger(Class<?> clazz) {  // 根据传入的Class对象，返回一个与该类关联的Logger实例
+    public static Logger getLogger(Class<?> clazz) {  // 根据类，创建一个与之关联的logger实例
         return Logger.getLogger(clazz.getName());
     }
 }
