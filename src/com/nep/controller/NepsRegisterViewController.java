@@ -5,13 +5,18 @@ import com.nep.entity.Supervisor;
 import com.nep.service.SupervisorService;
 import com.nep.service.impl.SupervisorServiceImpl;
 import com.nep.util.JavafxUtil;
+import com.nep.util.LogUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.logging.Logger;
+
 public class NepsRegisterViewController {
+    private static final Logger logger = LogUtil.getLogger(NepsRegisterViewController.class);
+
     @FXML
     private TextField txt_id;
     @FXML
@@ -54,31 +59,39 @@ public class NepsRegisterViewController {
     }
 
     public void register(){
-        if(!txt_password.getText().equals(txt_repassword.getText())){
-            JavafxUtil.showAlert(primaryStage, "注册失败", "两次输入密码不一致", "请重新输入确认密码","warn");
-            txt_repassword.setText("");
-            return;
+        try {
+            if(!txt_password.getText().equals(txt_repassword.getText())){
+                logger.warning("密码不一致: " + txt_id.getText());
+                JavafxUtil.showAlert(primaryStage, "注册失败", "两次输入密码不一致", "请重新输入确认密码","warn");
+                txt_repassword.setText("");
+                return;
+            }
+
+            Supervisor supervisor = new Supervisor();
+            supervisor.setLoginCode(txt_id.getText());
+            supervisor.setPassword(txt_password.getText());
+            supervisor.setRealName(txt_realName.getText());
+
+            // Get the selected sex
+            String sex = txt_sex_male.isSelected() ? txt_sex_male.getText() : txt_sex_female.getText();
+            supervisor.setSex(sex);
+
+            boolean flag = supervisorService.register(supervisor);
+            if(flag){
+                logger.info(String.format("用户注册成功: 手机号=%s", txt_id.getText()));
+                JavafxUtil.showAlert(primaryStage, "注册成功", txt_id.getText()+" 账号注册成功!","可以进行用户登录!" ,"info");
+            }else{
+                logger.warning(String.format("手机号已存在: %s", txt_id.getText()));
+                JavafxUtil.showAlert(primaryStage, "注册失败", "手机号已被注册", "请重新输入注册手机号码","warn");
+                txt_id.setText("");
+                return;
+            }
+            //跳转到登录界面进行登录
+            JavafxUtil.showStage(NepsMain.class,"view/NepsLoginView.fxml", primaryStage,"东软环保公众监督平台-公众监督员端");
+        } catch (Exception e) {
+            logger.severe(String.format("注册异常: 手机号=%s, 错误=%s", txt_id.getText(), e.getMessage()));
         }
 
-        Supervisor supervisor = new Supervisor();
-        supervisor.setLoginCode(txt_id.getText());
-        supervisor.setPassword(txt_password.getText());
-        supervisor.setRealName(txt_realName.getText());
-
-        // Get the selected sex
-        String sex = txt_sex_male.isSelected() ? txt_sex_male.getText() : txt_sex_female.getText();
-        supervisor.setSex(sex);
-
-        boolean flag = supervisorService.register(supervisor);
-        if(flag){
-            JavafxUtil.showAlert(primaryStage, "注册成功", txt_id.getText()+" 账号注册成功!","可以进行用户登录!" ,"info");
-        }else{
-            JavafxUtil.showAlert(primaryStage, "注册失败", "手机号已被注册", "请重新输入注册手机号码","warn");
-            txt_id.setText("");
-            return;
-        }
-        //跳转到登录界面进行登录
-        JavafxUtil.showStage(NepsMain.class,"view/NepsLoginView.fxml", primaryStage,"东软环保公众监督平台-公众监督员端");
     }
 
     public void back(){
