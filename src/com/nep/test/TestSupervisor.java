@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestSupervisor {
-    public static void main(String[] args) {
+    public static void main (String[] args) {
         Supervisor s1 = new Supervisor();
         s1.setLoginCode("202501");
         s1.setPassword("123");
@@ -28,6 +28,6 @@ public class TestSupervisor {
         slist.add(s2);
         slist.add(s3);
 
-        FileIO.writeObject("supervisor.txt",slist);
+        FileIO.writeObject("supervisor.txt", slist);
     }
 }
