@@ -21,7 +21,7 @@ public class LogUtil {
             }
 
             // 3. 添加FileHandler（输出到文件）
-            FileHandler fileHandler = new FileHandler("logs/app.log", true); // true表示追加模式
+            FileHandler fileHandler = new FileHandler("logs/app.log", true); // true为追加
             fileHandler.setFormatter(new SimpleFormatter());
             fileHandler.setLevel(Level.ALL);
 
@@ -35,7 +35,7 @@ public class LogUtil {
         }
     }
 
-    public static Logger getLogger(Class<?> clazz) {
+    public static Logger getLogger(Class<?> clazz) {  // 根据传入的Class对象，返回一个与该类关联的Logger实例
         return Logger.getLogger(clazz.getName());
     }
 }
