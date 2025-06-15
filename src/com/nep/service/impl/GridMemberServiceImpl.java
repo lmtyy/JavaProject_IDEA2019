@@ -1,15 +1,13 @@
 package com.nep.service.impl;
 
 import com.nep.entity.GridMember;
-import com.nep.io.FileIO;
 import com.nep.service.GridMemberService;
-import com.nep.util.DatabasedUtil;
+import com.nep.util.DatabaseUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class GridMemberServiceImpl implements GridMemberService {
 
@@ -17,7 +15,7 @@ public class GridMemberServiceImpl implements GridMemberService {
     public GridMember login(String loginCode, String password) {
         String sql = "SELECT * FROM nepg WHERE account = ? AND password = ?";
 
-        try (Connection conn=DatabasedUtil.getConnection();
+        try (Connection conn= DatabaseUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, loginCode);
