@@ -47,7 +47,7 @@ public class FileIO {
      * @param filepath
      * @param obj
      */
-    public static void writeObject(String filepath,Object obj){
+    public static void writeObject(String filepath, Object obj) {
         File file = new File(filepath);
         OutputStream os = null;
         ObjectOutputStream oos = null;
@@ -56,20 +56,22 @@ public class FileIO {
             oos = new ObjectOutputStream(os);
             oos.writeObject(obj);
             oos.flush();
+
+            logger.fine("文件写入成功: " + filepath);
         } catch (Exception ex) {
             // TODO: handle exception
-            ex.printStackTrace();
-        }finally{
+            logger.severe("文件写入失败: " + filepath + ", 错误: " + ex.getMessage());
+        } finally {
             try {
-                if(oos != null){
+                if (oos != null) {
                     oos.close();
                 }
-                if(os != null){
+                if (os != null) {
                     os.close();
                 }
             } catch (Exception e) {
                 // TODO: handle exception
-                e.printStackTrace();
+                logger.severe("文件关闭失败: " + filepath + ", 错误: " + e.getMessage());
             }
         }
     }
