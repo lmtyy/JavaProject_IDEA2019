@@ -5,7 +5,11 @@ import java.util.logging.*;
 public class LogUtil {
     private static final Logger logger = Logger.getLogger(LogUtil.class.getName());
 
-    static {
+    static {  // 类加载时自动执行
+        init();
+    }
+
+    public static void init() {
         try {
             // 1. 获取全局Logger（覆盖所有类的日志设置）
             Logger globalLogger = Logger.getLogger("");
