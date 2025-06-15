@@ -1,36 +1,42 @@
 package com.nep.io;
 
+import com.nep.util.LogUtil;
+
 import java.io.*;
+import java.util.logging.Logger;
 
 public class FileIO {
+    private static final Logger logger = LogUtil.getLogger(FileIO.class);
 
     /**
      * 读取文件
      * @param filepath
      * @return
      */
-    public static Object readObject(String filepath){
+    public static Object readObject(String filepath) {
         File file = new File(filepath);
         InputStream is = null;
         ObjectInputStream ois = null;
         Object obj = null;
-        try{
+        try {
             is = new FileInputStream(file);
             ois = new ObjectInputStream(is);
             obj = ois.readObject();
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }finally{
+
+            logger.fine("文件读取成功: " + filepath);
+        } catch (Exception ex){
+            logger.severe("文件读取失败: " + filepath + ", 错误: " + ex.getMessage());
+        } finally {
             try {
-                if(ois != null){
+                if (ois != null) {
                     ois.close();
                 }
-                if(is != null){
+                if (is != null) {
                     is.close();
                 }
             } catch (Exception e) {
                 // TODO: handle exception
-                e.printStackTrace();
+                logger.severe("文件关闭失败: " + filepath + ", 错误: " + e.getMessage());
             }
         }
         return obj ;
@@ -41,7 +47,7 @@ public class FileIO {
      * @param filepath
      * @param obj
      */
-    public static void writeObject(String filepath,Object obj){
+    public static void writeObject(String filepath, Object obj) {
         File file = new File(filepath);
         OutputStream os = null;
         ObjectOutputStream oos = null;
@@ -50,20 +56,22 @@ public class FileIO {
             oos = new ObjectOutputStream(os);
             oos.writeObject(obj);
             oos.flush();
+
+            logger.fine("文件写入成功: " + filepath);
         } catch (Exception ex) {
             // TODO: handle exception
-            ex.printStackTrace();
-        }finally{
+            logger.severe("文件写入失败: " + filepath + ", 错误: " + ex.getMessage());
+        } finally {
             try {
-                if(oos != null){
+                if (oos != null) {
                     oos.close();
                 }
-                if(os != null){
+                if (os != null) {
                     os.close();
                 }
             } catch (Exception e) {
                 // TODO: handle exception
-                e.printStackTrace();
+                logger.severe("文件关闭失败: " + filepath + ", 错误: " + e.getMessage());
             }
         }
     }

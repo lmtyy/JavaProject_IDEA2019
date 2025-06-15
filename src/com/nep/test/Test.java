@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Test {
-    public static void main(String[] args) {
+    public static void main (String[] args) {
         // 管网格员账号初始化
         GridMember gm1 = new GridMember();
         gm1.setLoginCode("2024001");

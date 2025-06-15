@@ -6,6 +6,7 @@ import com.nep.io.FileIO;
 import com.nep.service.AqiFeedbackService;
 import com.nep.service.impl.AqiFeedbackServiceImpl;
 import com.nep.util.JavafxUtil;
+import com.nep.util.LogUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -17,8 +18,11 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class NepmAqiAssignViewController implements Initializable {
+    private static final Logger logger = LogUtil.getLogger(NepmAqiAssignViewController.class);
+
     @FXML
     private Pane txt_pane1;
     @FXML
@@ -110,20 +114,35 @@ public class NepmAqiAssignViewController implements Initializable {
         }
     }
 
-    public void assignGridMember(){
-        //前做判断
-        if(label_afId.getText().equals("无")){
-            JavafxUtil.showAlert(aqiInfoStage, "指派失败", "未找到要指派的反馈信息", "请选择要指派的反馈信息","warn");
-            return;
+    public void assignGridMember() {
+        try {
+            //前做判断
+            if (label_afId.getText().equals("无")) {
+                logger.warning("未选择要指派的反馈信息");
+                JavafxUtil.showAlert(aqiInfoStage, "指派失败", "未找到要指派的反馈信息", "请选择要指派的反馈信息","warn");
+                return;
+            }
+
+            String gridMemberName = combo_realName.getValue();
+            if (gridMemberName.equals("请选择网格员")) {
+                logger.warning("未选择网格员");
+                JavafxUtil.showAlert(aqiInfoStage, "指派失败", "您没有选择要指派的网格员", "请选择您要指派的网格员","warn");
+                return;
+            }
+
+            aqiFeedbackService.assignGridMember(label_afId.getText(), gridMemberName);
+            logger.info(String.format(
+                    "任务指派成功 - 反馈ID: %s, 网格员: %s",
+                    label_afId.getText(), gridMemberName
+            ));
+            JavafxUtil.showAlert(aqiInfoStage, "指派成功", "AQI反馈信息指派成功!", "请等待网格员实测数据信息", "info");
+            initConroller();
+        } catch (Exception e) {
+            logger.severe(String.format(
+                    "任务指派失败 - 反馈ID: %s, 错误: %s",
+                    label_afId.getText(), e.getMessage()
+            ));
         }
-        if(combo_realName.getValue().equals("请选择网格员")){
-            JavafxUtil.showAlert(aqiInfoStage, "指派失败", "您没有选择要指派的网格员", "请选择您要指派的网格员","warn");
-            return;
-        }
-        String afId = label_afId.getText();
-        aqiFeedbackService.assignGridMember(afId, combo_realName.getValue());
-        JavafxUtil.showAlert(aqiInfoStage, "指派成功", "AQI反馈信息指派成功!", "请等待网格员实测数据信息","info");
-        initConroller();
     }
 
     // 界面空间初始化方法

@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class NepmAqiInfoViewController implements Initializable {
-
     @FXML
     private TableView<AqiFeedback> txt_tableView;
 
