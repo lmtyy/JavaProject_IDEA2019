@@ -2,13 +2,21 @@ package com.nep.controller;
 
 import com.nep.NepmMain;
 import com.nep.util.JavafxUtil;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.net.URL;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class NepmMainViewController implements Initializable {
@@ -17,6 +25,10 @@ public class NepmMainViewController implements Initializable {
     public static Stage primaryStage;
     @FXML
     private ImageView txt_imageView;
+    @FXML
+    private Label timeLabel;
+    @FXML
+    private Label weatherLabel;
 
     public ImageView getTxt_imageView() {
         return txt_imageView;
@@ -32,6 +44,18 @@ public class NepmMainViewController implements Initializable {
         Image image = new Image("image/welcome");
         txt_imageView.setImage(image);
         txt_imageView.setPreserveRatio(false);   //禁用保持纵横比
+
+        // 实时时钟
+        Timeline clock = new Timeline(
+                new KeyFrame(Duration.ZERO, e -> timeLabel.setText(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")))),
+                new KeyFrame(Duration.seconds(1))
+        );
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
+
+        // 模拟天气数据
+        String[] weathers = {"☀️ 晴天", "🌧️ 小雨", "⛅ 多云"};
+        weatherLabel.setText(weathers[new Random().nextInt(weathers.length)]);
     }
 
     public void aqiInfo(){
