@@ -38,7 +38,7 @@ public class LogUtil {
             rootLogger.addHandler(fileHandler);
 
             // 设置全局日志级别
-            rootLogger.setLevel(Level.INFO);
+            rootLogger.setLevel(Level.FINE);
 
             Logger.getGlobal().info("日志系统初始化完成（仅文件输出）");
         } catch (IOException e) {

@@ -15,27 +15,27 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean login(String logincode, String password) {
-        String sql = "SELECT COUNT(*) FROM nepm WHERE account = ? AND password = ?";  // ÒªÖ´ĞĞµÄsqlÓï¾ä£¬²éÑ¯Óï¾ä
+        String sql = "SELECT COUNT(*) FROM nepm WHERE account = ? AND password = ?";
 
         try (Connection conn = DatabaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {  // »ñÈ¡Ö´ĞĞsqlµÄ¶ÔÏó Prepared statement
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, logincode);
             stmt.setString(2, password);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    boolean result = rs.getInt(1) > 0;  // ´¦Àí½á¹û
+                    boolean result = rs.getInt(1) > 0;
                     if (result) {
-                        logger.info(String.format("¹ÜÀíÔ±µÇÂ¼ÑéÖ¤³É¹¦: account=%s", logincode));
+                        logger.info(String.format("ç®¡ç†å‘˜ç™»å½•éªŒè¯æˆåŠŸ: account=%s", logincode));
                     } else {
-                        logger.warning(String.format("¹ÜÀíÔ±µÇÂ¼ÑéÖ¤Ê§°Ü: account=%s", logincode));
+                        logger.warning(String.format("ç®¡ç†å‘˜ç™»å½•éªŒè¯å¤±è´¥: account=%s", logincode));
                     }
                     return result;
                 }
             }
         } catch (SQLException e) {
-            logger.severe(String.format("¹ÜÀíÔ±µÇÂ¼ÑéÖ¤Òì³£: account=%s, ´íÎó=%s", logincode, e.getMessage()));
+            logger.severe(String.format("ç®¡ç†å‘˜ç™»å½•éªŒè¯å¼‚å¸¸: account=%s, é”™è¯¯=%s", logincode, e.getMessage()));
         }
         return false;
     }

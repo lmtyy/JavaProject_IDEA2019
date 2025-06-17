@@ -16,15 +16,15 @@ public class GridMemberServiceImpl implements GridMemberService {
 
     @Override
     public GridMember login(String loginCode, String password) {
-        String sql = "SELECT * FROM nepg WHERE account = ? AND password = ?";  // ÒªÖ´ĞĞµÄsqlÓï¾ä
+        String sql = "SELECT * FROM nepg WHERE account = ? AND password = ?";
 
         try (Connection conn= DatabaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {  // »ñÈ¡Ö´ĞĞsqlµÄ¶ÔÏóPreparedStatement
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, loginCode);
             stmt.setString(2, password);
 
-            try (ResultSet rs = stmt.executeQuery()) {  // ´¦ÀíÊı¾İ
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     GridMember gm = new GridMember();
                     gm.setLoginCode(rs.getString("account"));
@@ -32,14 +32,14 @@ public class GridMemberServiceImpl implements GridMemberService {
                     gm.setPassword(rs.getString("password"));
                     gm.setGmTel(rs.getString("phoneNumber"));
                     gm.setState(rs.getString("state"));
-                    logger.info(String.format("Íø¸ñÔ±µÇÂ¼ÑéÖ¤³É¹¦: account=%s, name=%s", loginCode, gm.getRealName()));
+                    logger.info(String.format("ç½‘æ ¼å‘˜ç™»å½•éªŒè¯æˆåŠŸ: account=%s, name=%s", loginCode, gm.getRealName()));
                     return gm;
                 } else {
-                    logger.warning(String.format("Íø¸ñÔ±µÇÂ¼ÑéÖ¤Ê§°Ü: account=%s", loginCode));
+                    logger.warning(String.format("ç½‘æ ¼å‘˜ç™»å½•éªŒè¯å¤±è´¥: account=%s", loginCode));
                 }
             }
         } catch (SQLException e) {
-            logger.severe(String.format("Íø¸ñÔ±µÇÂ¼ÑéÖ¤Òì³£: account=%s, ´íÎó=%s", loginCode, e.getMessage()));
+            logger.severe(String.format("ç½‘æ ¼å‘˜ç™»å½•éªŒè¯å¼‚å¸¸: account=%s, é”™è¯¯=%s", loginCode, e.getMessage()));
         }
         return null;
     }
