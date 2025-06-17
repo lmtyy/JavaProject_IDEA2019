@@ -15,15 +15,15 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean login(String logincode, String password) {
-        String sql = "SELECT COUNT(*) FROM nepm WHERE account = ? AND password = ?";
+        String sql = "SELECT COUNT(*) FROM nepm WHERE account = ? AND password = ?";  // 要执行的sql语句
 
         try (Connection conn = DatabaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {  // 创建可执行sql语句的对象--prepared statement
 
             stmt.setString(1, logincode);
             stmt.setString(2, password);
 
-            try (ResultSet rs = stmt.executeQuery()) {
+            try (ResultSet rs = stmt.executeQuery()) {  // 处理数据
                 if (rs.next()) {
                     boolean result = rs.getInt(1) > 0;
                     if (result) {
