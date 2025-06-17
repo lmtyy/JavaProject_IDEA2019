@@ -44,15 +44,15 @@ public class NepmLoginViewController {
         try {
             boolean isLogin = adminService.login(txt_id.getText(), txt_password.getText());
             if (isLogin) {
-                logger.info(String.format("管理员登录成功: ID=%s", txt_id.getText()));
+                logger.info(String.format("管理员登录成功: ID=%s", txt_id.getText()));  // 登录成功为info级别
                 NepmMainViewController.primaryStage = primaryStage;
                 JavafxUtil.showStage(NepmMain.class, "view/NepmMainView.fxml", primaryStage, "东软环保公众监督平台-管理端-主功能界面");
             } else {
-                logger.warning(String.format("管理员登录失败: ID=%s", txt_id.getText()));
+                logger.warning(String.format("管理员登录失败: ID=%s", txt_id.getText()));  // 登录失败为warning级别
                 JavafxUtil.showAlert(primaryStage, "登录失败", "用户名密码错误", "请重新输入用户名和密码", "warn");
             }
         } catch (Exception e) {
-            logger.severe(String.format("登录异常: ID=%s, 错误=%s", txt_id.getText(), e.getMessage()));
+            logger.severe(String.format("登录异常: ID=%s, 错误=%s", txt_id.getText(), e.getMessage()));  // 登录异常为severe级别
         }
     }
 

@@ -22,8 +22,7 @@ public class FileIO {
             is = new FileInputStream(file);
             ois = new ObjectInputStream(is);
             obj = ois.readObject();
-
-            logger.fine("文件读取成功: " + filepath);
+            logger.fine("文件读取成功: " + filepath);  // txt文件读取情况也记入日志
         } catch (Exception ex){
             logger.severe("文件读取失败: " + filepath + ", 错误: " + ex.getMessage());
         } finally {
