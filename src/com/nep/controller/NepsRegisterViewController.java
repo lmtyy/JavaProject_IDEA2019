@@ -61,7 +61,7 @@ public class NepsRegisterViewController {
     public void register(){
         try {
             if(!txt_password.getText().equals(txt_repassword.getText())){
-                logger.warning("密码不一致: " + txt_id.getText());
+                logger.warning("密码不一致: " + txt_id.getText());  // 密码不一致设为warning级别
                 JavafxUtil.showAlert(primaryStage, "注册失败", "两次输入密码不一致", "请重新输入确认密码","warn");
                 txt_repassword.setText("");
                 return;
@@ -86,12 +86,11 @@ public class NepsRegisterViewController {
                 txt_id.setText("");
                 return;
             }
-            //跳转到登录界面进行登录
+            // 跳转到登录界面进行登录
             JavafxUtil.showStage(NepsMain.class,"view/NepsLoginView.fxml", primaryStage,"东软环保公众监督平台-公众监督员端");
         } catch (Exception e) {
             logger.severe(String.format("注册异常: 手机号=%s, 错误=%s", txt_id.getText(), e.getMessage()));
         }
-
     }
 
     public void back(){

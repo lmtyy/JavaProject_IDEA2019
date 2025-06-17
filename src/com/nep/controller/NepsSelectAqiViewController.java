@@ -44,11 +44,11 @@ public class NepsSelectAqiViewController implements Initializable {
     private TextArea txt_information;
     @FXML
     private Label label_realName;
-    //主舞台
+    // 主舞台
     public static Stage primaryStage;
-    //当前登录成功的公众监督员用户身份
+    // 当前登录成功的公众监督员用户身份
     public static Supervisor supervisor;
-    //多态
+    // 多态
     private AqiFeedbackService aqiFeedbackService = new AqiFeedbackServiceImpl();
 
     public TableView<Aqi> getTxt_tableView() {
@@ -158,7 +158,7 @@ public class NepsSelectAqiViewController implements Initializable {
             afb.setState("未指派");
 
             aqiFeedbackService.saveFeedBack(afb);
-            logger.info(String.format(
+            logger.info(String.format(  // 将监督员的提交信息记录为info存进日志
                     "AQI反馈提交 - 用户: %s, 地址: %s, 等级: %s",
                     supervisor.getRealName(), txt_address.getText(), txt_level.getValue()
             ));

@@ -131,14 +131,14 @@ public class NepmAqiAssignViewController implements Initializable {
             }
 
             aqiFeedbackService.assignGridMember(label_afId.getText(), gridMemberName);
-            logger.info(String.format(
+            logger.info(String.format(  // 管理员任务指派记为info存进日志
                     "任务指派成功 - 反馈ID: %s, 网格员: %s",
                     label_afId.getText(), gridMemberName
             ));
             JavafxUtil.showAlert(aqiInfoStage, "指派成功", "AQI反馈信息指派成功!", "请等待网格员实测数据信息", "info");
             initConroller();
         } catch (Exception e) {
-            logger.severe(String.format(
+            logger.severe(String.format(  // 错误记录以severe级别存入日志
                     "任务指派失败 - 反馈ID: %s, 错误: %s",
                     label_afId.getText(), e.getMessage()
             ));
