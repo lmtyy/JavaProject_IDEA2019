@@ -3,13 +3,16 @@ package com.nep.service.impl;
 import com.nep.entity.GridMember;
 import com.nep.service.GridMemberService;
 import com.nep.util.DatabaseUtil;
+import com.nep.util.LogUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class GridMemberServiceImpl implements GridMemberService {
+    private static final Logger logger = LogUtil.getLogger(GridMemberServiceImpl.class);
 
     @Override
     public GridMember login(String loginCode, String password) {
@@ -29,11 +32,14 @@ public class GridMemberServiceImpl implements GridMemberService {
                     gm.setPassword(rs.getString("password"));
                     gm.setGmTel(rs.getString("phoneNumber"));
                     gm.setState(rs.getString("state"));
+                    logger.info(String.format("网格员登录验证成功: account=%s, name=%s", loginCode, gm.getRealName()));
                     return gm;
+                } else {
+                    logger.warning(String.format("网格员登录验证失败: account=%s", loginCode));
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.severe(String.format("网格员登录验证异常: account=%s, 错误=%s", loginCode, e.getMessage()));
         }
         return null;
     }
