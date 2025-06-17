@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.util.logging.Logger;
 
 public class NepmLoginViewController {
-    private static final Logger logger = LogUtil.getLogger(NepmLoginViewController.class);
+    private static final Logger logger = LogUtil.getLogger(NepmLoginViewController.class);  // 与类关联的logger实例
 
     @FXML
     private TextField txt_id;
