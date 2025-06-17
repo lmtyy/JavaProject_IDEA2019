@@ -6,7 +6,7 @@ import java.sql.SQLException;
 public class DatabaseUtil {
     private static final String URL="jdbc:mysql://127.0.0.1:3306/nep";
     private static final String USER="root";
-    private static final String PASSWORD="bzy666";
+    private static final String PASSWORD="bzy666";  // 输入自己的数据库密码
     private static Connection connection;
     static {
         try {
