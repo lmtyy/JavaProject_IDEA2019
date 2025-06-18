@@ -33,9 +33,9 @@ public class NepmAqiInfoViewController implements Initializable {
         List<AqiFeedback> list = (List<AqiFeedback>) FileIO.readObject("aqifeedback.txt");
 
         // 设置导出文件保存路径（当前项目根目录）
-        String filePath = "aqi_feedback.xlsx";
+        String filePath = "excel/aqi_feedback.xlsx";
 
-        // 调用你前面写好的工具类执行导出
+        // 调用前面写好的工具类执行导出
         ExcelExportUtil.exportAqiFeedbackToExcel(list, filePath);
 
         // 弹窗提示导出成功
