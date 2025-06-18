@@ -21,7 +21,7 @@
             </font>
         </Label>
 
-        <Label layoutX="148.0" layoutY="173.0" text="注册手机号:">
+        <Label layoutX="148.0" layoutY="173.0" text="注册账号:">
             <font>
                 <Font size="14.0" />
             </font>
