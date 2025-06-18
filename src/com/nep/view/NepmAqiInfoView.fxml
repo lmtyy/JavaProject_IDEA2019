@@ -18,6 +18,8 @@
         <TableView fx:id="txt_tableView" layoutX="25.0" layoutY="65.0" prefHeight="360.0" prefWidth="600.0">
 
         </TableView>
+        <Button layoutX="530.0" layoutY="430.0" text="导出Excel" onAction="#exportToExcel"/>
+
 
     </children>
 
