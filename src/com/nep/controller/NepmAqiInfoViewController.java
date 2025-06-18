@@ -83,14 +83,12 @@ public class NepmAqiInfoViewController implements Initializable {
         txt_tableView.getColumns().addAll(afIdColumn, proviceNameColumn,cityNameColumn,estimateGradeColumn,dateColumn,afNameColumn,infoColumn);
         ObservableList<AqiFeedback> data = FXCollections.observableArrayList();
         List<AqiFeedback> afList = (List<AqiFeedback>) FileIO.readObject("aqifeedback.txt");
-        for(AqiFeedback afb:afList){
-            if(afb.getState().equals("未指派")){
+        for (AqiFeedback afb:afList) {
+            if (afb.getState().equals("未指派")) {
                 data.add(afb);
             }
-
         }
         txt_tableView.setItems(data);
     }
-
 }
 
