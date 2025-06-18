@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class DatabaseUtil {
     private static final Logger logger = LogUtil.getLogger(DatabaseUtil.class);
-    private static final String URL="jdbc:mysql://127.0.0.1:3306/nep";  // 数据库地址
+    private static final String URL="jdbc:mysql://127.0.0.1:3306/nep?useSSL=false";  // 数据库地址
     private static final String USER="root";  // 数据库账号
     private static final String PASSWORD="bzy666";  // 输入自己的数据库密码
     private static Connection connection;
