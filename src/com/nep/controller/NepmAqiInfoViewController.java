@@ -30,7 +30,7 @@ public class NepmAqiInfoViewController implements Initializable {
     @FXML
     public void exportToExcel() {
         // 从文件读取所有 AQI 反馈数据
-        List<AqiFeedback> list = (List<AqiFeedback>) FileIO.readObject("aqifeedback.xlsx");
+        List<AqiFeedback> list = (List<AqiFeedback>) FileIO.readObject("aqifeedback.txt");
 
         // 设置导出文件保存路径（当前项目根目录）
         String filePath = "aqi_feedback.xlsx";

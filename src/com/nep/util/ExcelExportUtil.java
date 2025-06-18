@@ -11,17 +11,17 @@ public class ExcelExportUtil {
 
     public static void exportAqiFeedbackToExcel(List<AqiFeedback> dataList, String filePath) {
         Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("AQI·´À¡ĞÅÏ¢");
+        Sheet sheet = workbook.createSheet("AQIåé¦ˆä¿¡æ¯");
 
-        // ´´½¨±íÍ·
+        // åˆ›å»ºè¡¨å¤´
         Row header = sheet.createRow(0);
-        String[] titles = {"±àºÅ", "ĞÕÃû", "Ê¡", "ÊĞ", "µØÖ·", "·´À¡ĞÅÏ¢", "Ô¤¹ÀµÈ¼¶", "×´Ì¬", "·´À¡ÈÕÆÚ"};
+        String[] titles = {"ç¼–å·", "å§“å", "çœ", "å¸‚", "åœ°å€", "åé¦ˆä¿¡æ¯", "é¢„ä¼°ç­‰çº§", "çŠ¶æ€", "åé¦ˆæ—¥æœŸ"};
         for (int i = 0; i < titles.length; i++) {
             Cell cell = header.createCell(i);
             cell.setCellValue(titles[i]);
         }
 
-        // Ìî³äÊı¾İ
+        // å¡«å……æ•°æ®
         int rowIndex = 1;
         for (AqiFeedback af : dataList) {
             Row row = sheet.createRow(rowIndex++);
@@ -38,7 +38,7 @@ public class ExcelExportUtil {
 
         try (FileOutputStream out = new FileOutputStream(filePath)) {
             workbook.write(out);
-            System.out.println("µ¼³ö³É¹¦£º" + filePath);
+            System.out.println("å¯¼å‡ºæˆåŠŸï¼š" + filePath);
         } catch (Exception e) {
             e.printStackTrace();
         }
