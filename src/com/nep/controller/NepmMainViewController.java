@@ -46,8 +46,10 @@ public class NepmMainViewController implements Initializable {
         txt_imageView.setPreserveRatio(false);   //禁用保持纵横比
 
         // 实时时钟
-        Timeline clock = new Timeline(
+        Timeline clock = new Timeline(  // 创建 Timeline 对象
+                // 第一个 KeyFrame: 在时间零点执行的操作
                 new KeyFrame(Duration.ZERO, e -> timeLabel.setText(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")))),
+                // 第二个 KeyFrame: 定义动画周期(每秒触发一次)
                 new KeyFrame(Duration.seconds(1))
         );
         clock.setCycleCount(Animation.INDEFINITE);
