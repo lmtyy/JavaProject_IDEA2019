@@ -4,12 +4,16 @@ import com.nep.NepsMain;
 import com.nep.service.SupervisorService;
 import com.nep.service.impl.SupervisorServiceImpl;
 import com.nep.util.JavafxUtil;
+import com.nep.util.LogUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.logging.Logger;
+
 public class NepsLoginViewController {
+    private static final Logger logger = LogUtil.getLogger(NepsLoginViewController.class);
 
     @FXML
     private TextField txt_id;	//绑定登录账号文本框
@@ -42,8 +46,10 @@ public class NepsLoginViewController {
         if (flag) {
             NepsSelectAqiViewController.primaryStage = primaryStage;
             JavafxUtil.showStage(NepsMain.class,"view/NepsSelectAqiView.fxml", primaryStage, "东软环保公众监督平台-公众监督员端-AQI数据反馈");
+            logger.info(String.format("监督员登录成功，ID=%s", txt_id.getText()));
         } else {
             JavafxUtil.showAlert(primaryStage, "登录失败", "用户名密码错误", "","warn");
+            logger.warning(String.format("监督员登录失败，ID=%s", txt_id.getText()));
         }
     }
 
