@@ -54,7 +54,7 @@ public class NepmMainViewController implements Initializable {
         clock.play();
 
         // 模拟天气数据
-        String[] weathers = {"☀️ 晴天", "🌧️ 小雨", "⛅ 多云"};
+        String[] weathers = {" ☀晴天", " 🌧️小雨", " ⛅多云"};
         weatherLabel.setText(weathers[new Random().nextInt(weathers.length)]);
     }
 
