@@ -23,7 +23,7 @@ public class LogUtil {
             new File("logs").mkdirs(); // 自动创建logs目录
             FileHandler fileHandler = new FileHandler("logs/app.log", true); // true为追加
             fileHandler.setFormatter(new SimpleFormatter() {
-                private static final String FORMAT = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
+                private static final String FORMAT = "[%1$tF %1$tT] [%2$-7s] %3$s %n";  // 兼容英文
 
                 @Override
                 public String format(LogRecord record) {
