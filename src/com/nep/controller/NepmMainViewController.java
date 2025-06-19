@@ -58,15 +58,15 @@ public class NepmMainViewController implements Initializable {
         weatherLabel.setText(weathers[new Random().nextInt(weathers.length)]);
     }
 
-    public void aqiInfo(){
+    public void aqiInfo() {
         JavafxUtil.showSubStage(NepmMain.class, "view/NepmAqiInfoView.fxml", primaryStage, "东软环保公众监督平台-管理端-AQI反馈数据查询");
     }
 
-    public void aqiAssign(){
+    public void aqiAssign() {
         NepmAqiAssignViewController.aqiInfoStage = JavafxUtil.showSubStage(NepmMain.class, "view/NepmAqiAssignView.fxml", primaryStage, "东软环保公众监督平台-管理端-AQI反馈数据指派");;
     }
 
-    public void aqiConfirm(){
+    public void aqiConfirm() {
         JavafxUtil.showSubStage(NepmMain.class, "view/NepmConfirmInfoView.fxml", primaryStage, "东软环保公众监督平台-管理端-AQI实测数据查询");
     }
 }

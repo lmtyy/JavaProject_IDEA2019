@@ -46,7 +46,7 @@ public class NepsFeedbackViewController implements Initializable {
     }
 
 
-    public void back(){
+    public void back() {
         JavafxUtil.showStage(NepsMain.class,"view/NepsSelectAqiView.fxml", primaryStage,"东软环保公众监督平台-公众监督员端-AQI数据反馈");
     }
 
@@ -89,9 +89,9 @@ public class NepsFeedbackViewController implements Initializable {
         txt_tableView.getColumns().addAll(afIdColumn, proviceNameColumn,cityNameColumn,estimateGradeColumn,dateColumn,infoColumn);
         ObservableList<AqiFeedback> data = FXCollections.observableArrayList();
         List<AqiFeedback> afList = (List<AqiFeedback>) FileIO.readObject("aqifeedback.txt");
-        for(int i = afList.size()-1;i>=0 ;i--){			//按照时间排序,有近到远
+        for (int i = afList.size()-1; i>=0 ; i--) {			//按照时间排序,有近到远
             AqiFeedback afb = afList.get(i);
-            if(afb.getAfName().equals(supervisor.getRealName())){
+            if (afb.getAfName().equals(supervisor.getRealName())) {
                 data.add(afb);
             }
         }
