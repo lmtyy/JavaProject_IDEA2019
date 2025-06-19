@@ -3,7 +3,6 @@ package com.nep.service.impl;
 import com.nep.controller.NepsFeedbackViewController;
 import com.nep.controller.NepsSelectAqiViewController;
 import com.nep.entity.Supervisor;
-import com.nep.io.FileIO;
 import com.nep.service.SupervisorService;
 import com.nep.util.DatabaseUtil;
 
@@ -11,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class SupervisorServiceImpl implements SupervisorService {
 
@@ -68,13 +66,9 @@ public class SupervisorServiceImpl implements SupervisorService {
                 insertStmt.executeUpdate();
                 return true;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
-
-
-
 }

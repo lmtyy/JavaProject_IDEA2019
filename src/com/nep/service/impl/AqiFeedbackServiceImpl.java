@@ -22,7 +22,7 @@ public class AqiFeedbackServiceImpl implements AqiFeedbackService {
         // TODO Auto-generated method stub
         List<AqiFeedback> alist = (List<AqiFeedback>)FileIO.readObject("aqifeedback.txt");
         for (AqiFeedback af : alist) {
-            if(af.getAfId().toString().equals(afId)){
+            if (af.getAfId().toString().equals(afId)) {
                 af.setGmName(realName);
                 af.setState("已指派");
                 break;
@@ -36,9 +36,9 @@ public class AqiFeedbackServiceImpl implements AqiFeedbackService {
         // TODO Auto-generated method stub
         System.out.println(afb.getAfId());
         List<AqiFeedback> afList = (List<AqiFeedback>)FileIO.readObject("aqifeedback.txt");
-        for(int i = 0; i< afList.size();i++){
+        for (int i = 0; i< afList.size();i++) {
             AqiFeedback a = afList.get(i);
-            if(a.getGmName() != null && a.getGmName().equals(afb.getGmName()) && a.getAfId().intValue()==afb.getAfId().intValue()){
+            if (a.getGmName() != null && a.getGmName().equals(afb.getGmName()) && a.getAfId().intValue()==afb.getAfId().intValue()) {
                 a.setState(afb.getState());
                 a.setConfirmDate(afb.getConfirmDate());
                 a.setCo(afb.getCo());
