@@ -1,13 +1,18 @@
 package com.nep.util;
 
 import com.nep.entity.AqiFeedback;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ExcelExportUtil {
+    private static final Logger logger = LogUtil.getLogger(ExcelExportUtil.class);
 
     public static void exportAqiFeedbackToExcel(List<AqiFeedback> dataList, String filePath) {
         Workbook workbook = new XSSFWorkbook();
@@ -38,9 +43,9 @@ public class ExcelExportUtil {
 
         try (FileOutputStream out = new FileOutputStream(filePath)) {
             workbook.write(out);
-            System.out.println("导出成功：" + filePath);
+            logger.info(String.format("AQI数据excel导出成功，路径：%s", filePath));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.severe(String.format("AQI数据excel导出失败 - 错误：%s", e.getMessage()));
         }
     }
 }

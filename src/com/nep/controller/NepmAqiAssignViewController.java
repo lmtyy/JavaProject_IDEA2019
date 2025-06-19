@@ -94,7 +94,7 @@ public class NepmAqiAssignViewController implements Initializable {
         List<AqiFeedback> alist = (List<AqiFeedback>)FileIO.readObject("aqifeedback.txt");
         boolean flag = true;
         for (AqiFeedback af : alist) {
-            if(af.getAfId().toString().equals(afId) && af.getState().equals("未指派")){
+            if (af.getAfId().toString().equals(afId) && af.getState().equals("未指派")) {
                 flag = false;
                 label_afId.setText(af.getAfId()+"");
                 label_afName.setText(af.getAfName());
@@ -106,9 +106,8 @@ public class NepmAqiAssignViewController implements Initializable {
                 label_proviceName.setText(af.getProviceName());
                 break;
             }
-
         }
-        if(flag){
+        if (flag) {
             JavafxUtil.showAlert(aqiInfoStage, "查询失败", "未找到当前编号反馈信息", "请重新输入AQI反馈数据编号","warn");
             initConroller();
         }
