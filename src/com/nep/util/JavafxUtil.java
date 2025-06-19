@@ -18,7 +18,7 @@ public class JavafxUtil {
      * @param headerText
      * @param contentText
      */
-    public static void showAlert(Stage primaryStage,String title,String headerText,String contentText,String alertType){
+    public static void showAlert(Stage primaryStage,String title,String headerText,String contentText,String alertType) {
         Alert alert = null;
         switch (alertType) {
             case "warn":
@@ -44,7 +44,7 @@ public class JavafxUtil {
      * @param primaryStage
      * @param title
      */
-    public static void showStage(Class clazz,String path,Stage primaryStage,String title){
+    public static void showStage(Class clazz,String path,Stage primaryStage,String title) {
         FXMLLoader loader = new FXMLLoader();
         URL url = clazz.getResource(path);
         loader.setLocation(url);
@@ -68,7 +68,7 @@ public class JavafxUtil {
      * @param title
      * @return
      */
-    public static Stage showSubStage(Class clazz, String path, Stage primaryStage, String title){
+    public static Stage showSubStage(Class clazz, String path, Stage primaryStage, String title) {
         FXMLLoader loader = new FXMLLoader();
         URL url = clazz.getResource(path);
         loader.setLocation(url);
