@@ -2,6 +2,8 @@ package com.nep.controller;
 
 import com.nep.entity.AqiFeedback;
 import com.nep.io.FileIO;
+import com.nep.util.ExcelExportUtil;
+import com.nep.util.JavafxUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,6 +26,20 @@ public class NepmAqiInfoViewController implements Initializable {
 
     public void setTxt_tableView(TableView<AqiFeedback> txt_tableView) {
         this.txt_tableView = txt_tableView;
+    }
+    @FXML
+    public void exportToExcel() {
+        // 从文件读取所有 AQI 反馈数据
+        List<AqiFeedback> list = (List<AqiFeedback>) FileIO.readObject("aqifeedback.txt");
+
+        // 设置导出文件保存路径（当前项目根目录）
+        String filePath = "excel/aqi_feedback.xlsx";
+
+        // 调用前面写好的工具类执行导出
+        ExcelExportUtil.exportAqiFeedbackToExcel(list, filePath);
+
+        // 弹窗提示导出成功
+        JavafxUtil.showAlert(null, "导出成功", "AQI反馈信息已成功导出", "文件位置：" + filePath, "info");
     }
 
     @Override
@@ -67,14 +83,12 @@ public class NepmAqiInfoViewController implements Initializable {
         txt_tableView.getColumns().addAll(afIdColumn, proviceNameColumn,cityNameColumn,estimateGradeColumn,dateColumn,afNameColumn,infoColumn);
         ObservableList<AqiFeedback> data = FXCollections.observableArrayList();
         List<AqiFeedback> afList = (List<AqiFeedback>) FileIO.readObject("aqifeedback.txt");
-        for(AqiFeedback afb:afList){
-            if(afb.getState().equals("未指派")){
+        for (AqiFeedback afb:afList) {
+            if (afb.getState().equals("未指派")) {
                 data.add(afb);
             }
-
         }
         txt_tableView.setItems(data);
     }
-
 }
 

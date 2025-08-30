@@ -46,27 +46,29 @@ public class NepmMainViewController implements Initializable {
         txt_imageView.setPreserveRatio(false);   //禁用保持纵横比
 
         // 实时时钟
-        Timeline clock = new Timeline(
+        Timeline clock = new Timeline(  // 创建 Timeline 对象
+                // 第一个 KeyFrame: 在时间零点执行的操作
                 new KeyFrame(Duration.ZERO, e -> timeLabel.setText(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")))),
+                // 第二个 KeyFrame: 定义动画周期(每秒触发一次)
                 new KeyFrame(Duration.seconds(1))
         );
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
 
         // 模拟天气数据
-        String[] weathers = {"☀️ 晴天", "🌧️ 小雨", "⛅ 多云"};
+        String[] weathers = {" ☀晴天", " 🌧️小雨", " ⛅多云"};
         weatherLabel.setText(weathers[new Random().nextInt(weathers.length)]);
     }
 
-    public void aqiInfo(){
+    public void aqiInfo() {
         JavafxUtil.showSubStage(NepmMain.class, "view/NepmAqiInfoView.fxml", primaryStage, "东软环保公众监督平台-管理端-AQI反馈数据查询");
     }
 
-    public void aqiAssign(){
+    public void aqiAssign() {
         NepmAqiAssignViewController.aqiInfoStage = JavafxUtil.showSubStage(NepmMain.class, "view/NepmAqiAssignView.fxml", primaryStage, "东软环保公众监督平台-管理端-AQI反馈数据指派");;
     }
 
-    public void aqiConfirm(){
+    public void aqiConfirm() {
         JavafxUtil.showSubStage(NepmMain.class, "view/NepmConfirmInfoView.fxml", primaryStage, "东软环保公众监督平台-管理端-AQI实测数据查询");
     }
 }

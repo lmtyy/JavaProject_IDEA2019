@@ -127,23 +127,23 @@ public class NepgAqiConfirmViewController implements Initializable {
         txt_tableView.getColumns().addAll(afIdColumn,afNameColumn,dateColumn,estimateGradeColumn, proviceNameColumn,cityNameColumn,addressColumn,infoColumn);
         ObservableList<AqiFeedback> data = FXCollections.observableArrayList();
         List<AqiFeedback> afList = (List<AqiFeedback>) FileIO.readObject("aqifeedback.txt");
-        for(AqiFeedback afb:afList){
-            if(afb.getGmName() != null && afb.getGmName().equals(gridMember.getRealName()) && afb.getState().equals("已指派")){
+        for (AqiFeedback afb:afList) {
+            if (afb.getGmName() != null && afb.getGmName().equals(gridMember.getRealName()) && afb.getState().equals("已指派")) {
                 data.add(afb);
             }
         }
         txt_tableView.setItems(data);
         //添加编号文本框事件监听
         txt_afId.focusedProperty().addListener((obs,wasFocused,isNowFocused)->{
-            if(!isNowFocused){
+            if (!isNowFocused) {
                 boolean flag = true;
-                for(AqiFeedback afb:afList){
-                    if(afb.getGmName() != null && afb.getAfId().toString().equals(txt_afId.getText()) ){
+                for (AqiFeedback afb:afList) {
+                    if (afb.getGmName() != null && afb.getAfId().toString().equals(txt_afId.getText()) ) {
                         flag = false;
                         return;
                     }
                 }
-                if(flag){
+                if (flag) {
                     JavafxUtil.showAlert(primaryStage, "数据错误", "AQI反馈数据编号有误", "请重新输入AQI反馈数据编号","warn");
                     txt_afId.setText("");
                 }
@@ -153,7 +153,7 @@ public class NepgAqiConfirmViewController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 // TODO Auto-generated method stub
-                if(!txt_so2.getText().equals("")){
+                if (!txt_so2.getText().equals("")) {
                     AqiLimitDto dto = CommonUtil.so2Limit(Double.parseDouble(txt_so2.getText()));
                     label_so2level.setText(dto.getLevel());
                     label_so2level.setStyle("-fx-text-fill:"+dto.getColor()+";");
@@ -167,14 +167,13 @@ public class NepgAqiConfirmViewController implements Initializable {
                     label_confirmexplain.setStyle("-fx-background-color:"+confirmDto.getColor()+";");
                 }
             }
-
         });
 
         txt_co.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 // TODO Auto-generated method stub
-                if(!txt_co.getText().equals("")){
+                if (!txt_co.getText().equals("")) {
                     AqiLimitDto dto = CommonUtil.coLimit(Double.parseDouble(txt_co.getText()));
                     label_colevel.setText(dto.getLevel());
                     label_colevel.setStyle("-fx-text-fill:"+dto.getColor()+";");
@@ -194,7 +193,7 @@ public class NepgAqiConfirmViewController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 // TODO Auto-generated method stub
-                if(!txt_pm.getText().equals("")){
+                if (!txt_pm.getText().equals("")) {
                     AqiLimitDto dto = CommonUtil.pmLimit(Double.parseDouble(txt_pm.getText()));
                     label_pmlevel.setText(dto.getLevel());
                     label_pmlevel.setStyle("-fx-text-fill:"+dto.getColor()+";");
@@ -213,7 +212,7 @@ public class NepgAqiConfirmViewController implements Initializable {
 
     }
 
-    public void confirmData(){
+    public void confirmData() {
         AqiFeedback afb = new AqiFeedback();
         afb.setAfId(Integer.parseInt(txt_afId.getText()));
         afb.setState("已实测");
@@ -229,8 +228,8 @@ public class NepgAqiConfirmViewController implements Initializable {
         //刷新页面数据表格
         ObservableList<AqiFeedback> data = FXCollections.observableArrayList();
         List<AqiFeedback> aList = (List<AqiFeedback>)FileIO.readObject("aqifeedback.txt");
-        for(AqiFeedback a:aList){
-            if(a.getGmName() != null && a.getGmName().equals(gridMember.getRealName()) && a.getState().equals("已指派")){
+        for (AqiFeedback a:aList) {
+            if (a.getGmName() != null && a.getGmName().equals(gridMember.getRealName()) && a.getState().equals("已指派")) {
                 data.add(a);
             }
         }
@@ -241,7 +240,7 @@ public class NepgAqiConfirmViewController implements Initializable {
     /**
      * 文本框和标签内容重置
      */
-    public void reset(){
+    public void reset() {
         txt_afId.setText("");
         txt_so2.setText("");
         txt_co.setText("");

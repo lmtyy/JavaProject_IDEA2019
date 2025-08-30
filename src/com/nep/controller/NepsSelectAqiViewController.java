@@ -44,11 +44,11 @@ public class NepsSelectAqiViewController implements Initializable {
     private TextArea txt_information;
     @FXML
     private Label label_realName;
-    //主舞台
+    // 主舞台
     public static Stage primaryStage;
-    //当前登录成功的公众监督员用户身份
+    // 当前登录成功的公众监督员用户身份
     public static Supervisor supervisor;
-    //多态
+    // 多态
     private AqiFeedbackService aqiFeedbackService = new AqiFeedbackServiceImpl();
 
     public TableView<Aqi> getTxt_tableView() {
@@ -107,18 +107,18 @@ public class NepsSelectAqiViewController implements Initializable {
         txt_tableView.getColumns().addAll(levelColumn, explainColumn,impactColumn);
         ObservableList<Aqi> data = FXCollections.observableArrayList();
         List<Aqi> alist = (List<Aqi>) FileIO.readObject("aqi.txt");
-        for(Aqi aqi:alist){
+        for (Aqi aqi:alist) {
             data.add(aqi);
         }
         txt_tableView.setItems(data);
         //初始化AQI等级下拉列表
-        for(Aqi aqi:alist){
+        for (Aqi aqi:alist) {
             txt_level.getItems().add(aqi.getLevel());
         }
         txt_level.setValue("预估AQI等级");
         //初始化省市区域
         List<ProvinceCity> plist = (List<ProvinceCity>)FileIO.readObject("province_city.txt");
-        for(ProvinceCity province:plist){
+        for (ProvinceCity province:plist) {
             txt_province.getItems().add(province.getProvinceName());
         }
         txt_province.setValue("请选择省区域");
@@ -134,15 +134,12 @@ public class NepsSelectAqiViewController implements Initializable {
                         clist = plist.get(i).getCityName();
                     }
                 }
-                for(String cityName:clist){
+                for (String cityName:clist) {
                     txt_city.getItems().add(cityName);
                 }
                 txt_city.setValue("请选择市区域");
             }
-
         });
-
-
     }
 
     public void saveFeedBack() {
@@ -158,7 +155,7 @@ public class NepsSelectAqiViewController implements Initializable {
             afb.setState("未指派");
 
             aqiFeedbackService.saveFeedBack(afb);
-            logger.info(String.format(
+            logger.info(String.format(  // 将监督员的提交信息记录为info存进日志
                     "AQI反馈提交 - 用户: %s, 地址: %s, 等级: %s",
                     supervisor.getRealName(), txt_address.getText(), txt_level.getValue()
             ));
@@ -174,10 +171,9 @@ public class NepsSelectAqiViewController implements Initializable {
         }
     }
 
-    public void feedBackList(){
+    public void feedBackList() {
         NepsFeedbackViewController.primaryStage = primaryStage;
         JavafxUtil.showStage(NepsMain.class,"view/NepsFeedbackView.fxml", primaryStage,"东软环保公众监督平台-公众监督员端-AQI反馈数据列表");
     }
-
 }
 

@@ -13,17 +13,17 @@ public class LogUtil {
         try {
             Logger rootLogger = Logger.getLogger("");
 
-            // 1. 移除所有默认Handler（包括ConsoleHandler）
+            // 移除所有默认Handler
             Handler[] handlers = rootLogger.getHandlers();
             for (Handler handler : handlers) {
                 rootLogger.removeHandler(handler);
             }
 
-            // 2. 仅配置FileHandler（无ConsoleHandler）
+            // 配置FileHandler
             new File("logs").mkdirs(); // 自动创建logs目录
             FileHandler fileHandler = new FileHandler("logs/app.log", true); // true为追加
             fileHandler.setFormatter(new SimpleFormatter() {
-                private static final String FORMAT = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
+                private static final String FORMAT = "[%1$tF %1$tT] [%2$-7s] %3$s %n";  // 兼容英文
 
                 @Override
                 public String format(LogRecord record) {
@@ -37,7 +37,7 @@ public class LogUtil {
             fileHandler.setLevel(Level.ALL); // 记录所有级别日志
             rootLogger.addHandler(fileHandler);
 
-            // 3. 设置全局日志级别
+            // 设置全局日志级别
             rootLogger.setLevel(Level.INFO);
 
             Logger.getGlobal().info("日志系统初始化完成（仅文件输出）");

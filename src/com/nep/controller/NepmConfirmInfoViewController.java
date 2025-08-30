@@ -90,7 +90,7 @@ public class NepmConfirmInfoViewController implements Initializable {
         txt_tableView.getColumns().addAll(afIdColumn, proviceNameColumn,cityNameColumn,estimateGradeColumn,dateColumn,afNameColumn,so2Column,coColumn,pmColumn,confirmLevelColumn,confirmExplainColumn,confirmDateColumn,gmNameColumn);
         ObservableList<AqiFeedback> data = FXCollections.observableArrayList();
         List<AqiFeedback> afList = (List<AqiFeedback>) FileIO.readObject("aqifeedback.txt");
-        for(AqiFeedback afb:afList){
+        for (AqiFeedback afb:afList) {
             if(afb.getState().equals("已实测")){
                 data.add(afb);
             }

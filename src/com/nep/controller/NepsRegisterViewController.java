@@ -58,10 +58,10 @@ public class NepsRegisterViewController {
         this.txt_realName = txt_realName;
     }
 
-    public void register(){
+    public void register() {
         try {
-            if(!txt_password.getText().equals(txt_repassword.getText())){
-                logger.warning("密码不一致: " + txt_id.getText());
+            if (!txt_password.getText().equals(txt_repassword.getText())) {
+                logger.warning("密码不一致: " + txt_id.getText());  // 密码不一致设为warning级别
                 JavafxUtil.showAlert(primaryStage, "注册失败", "两次输入密码不一致", "请重新输入确认密码","warn");
                 txt_repassword.setText("");
                 return;
@@ -77,24 +77,23 @@ public class NepsRegisterViewController {
             supervisor.setSex(sex);
 
             boolean flag = supervisorService.register(supervisor);
-            if(flag){
-                logger.info(String.format("用户注册成功: 手机号=%s", txt_id.getText()));
+            if (flag) {
+                logger.info(String.format("用户注册成功: 账号=%s", txt_id.getText()));
                 JavafxUtil.showAlert(primaryStage, "注册成功", txt_id.getText()+" 账号注册成功!","可以进行用户登录!" ,"info");
-            }else{
-                logger.warning(String.format("手机号已存在: %s", txt_id.getText()));
-                JavafxUtil.showAlert(primaryStage, "注册失败", "手机号已被注册", "请重新输入注册手机号码","warn");
+            } else {
+                logger.warning(String.format("账号已存在: %s", txt_id.getText()));
+                JavafxUtil.showAlert(primaryStage, "注册失败", "账号已被注册", "请重新输入注册账号号码","warn");
                 txt_id.setText("");
                 return;
             }
-            //跳转到登录界面进行登录
+            // 跳转到登录界面进行登录
             JavafxUtil.showStage(NepsMain.class,"view/NepsLoginView.fxml", primaryStage,"东软环保公众监督平台-公众监督员端");
         } catch (Exception e) {
-            logger.severe(String.format("注册异常: 手机号=%s, 错误=%s", txt_id.getText(), e.getMessage()));
+            logger.severe(String.format("注册异常: 账号=%s, 错误=%s", txt_id.getText(), e.getMessage()));
         }
-
     }
 
-    public void back(){
+    public void back() {
         JavafxUtil.showStage(NepsMain.class,"view/NepsLoginView.fxml", primaryStage,"东软环保公众监督平台-公众监督员端");
     }
 }
